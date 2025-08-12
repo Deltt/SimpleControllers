@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://com103aqeonsu"]
+[gd_scene load_steps=8 format=3 uid="uid://com103aqeonsu"]
 
-[ext_resource type="PackedScene" uid="uid://pkoxsa2u2bxo" path="res://ControllerPrefabs/SimpleCharacter/simple_character.tscn" id="1_f3sb7"]
+[ext_resource type="PackedScene" uid="uid://cl2hedl05jkh" path="res://ControllerPrefabs/PhysicsCharacter/physics_character.tscn" id="1_f3sb7"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gv5m4"]
 albedo_color = Color(0.236374, 0.130726, 0.00143951, 1)
@@ -15,6 +15,9 @@ data = PackedVector3Array(-50, 0.5, 50, 50, 0.5, 50, -50, -0.5, 50, 50, 0.5, 50,
 albedo_color = Color(1, 0, 1, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_fj7yv"]
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_fj7yv"]
+data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
 
 [node name="World" type="Node3D"]
 
@@ -33,9 +36,14 @@ material_override = SubResource("StandardMaterial3D_f3sb7")
 mesh = SubResource("BoxMesh_fj7yv")
 
 [node name="Center2" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.37447, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.37447, 2.21088, 0)
 material_override = SubResource("StandardMaterial3D_f3sb7")
 mesh = SubResource("BoxMesh_fj7yv")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="Center2"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Center2/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_fj7yv")
 
 [node name="Center3" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.32884, 0, -5.36091)
@@ -45,5 +53,7 @@ mesh = SubResource("BoxMesh_fj7yv")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.562026, -0.517624, 0.64513, 0, 0.779972, 0.625815, -0.82712, -0.351724, 0.438364, 0, 2.74145, 0)
 
-[node name="SimpleCharacter" parent="." instance=ExtResource("1_f3sb7")]
-transform = Transform3D(1, 0, 0, 0, 0.961261, -0.275637, 0, 0.275637, 0.961261, 0, 0, 0)
+[node name="PhysicsCharacter" parent="." instance=ExtResource("1_f3sb7")]
+center_of_mass_mode = 1
+center_of_mass = Vector3(0, 0.25, 0)
+angular_damp = 0.8
